@@ -6,6 +6,14 @@ resource "aws_elasticache_subnet_group" "main" {
 resource "aws_elasticache_parameter_group" "main" {
   name   = "${local.name_prefix}-pg"
   family = var.family
+  tags = merge(local.tags,{name = "${local.name_prefix}-pg"})
+}
+
+
+
+resource "aws_elasticache_parameter_group" "main" {
+  name   = "${local.name_prefix}-pg"
+  family = var.family
   tags   = merge(local.tags, { Name = "${local.name_prefix}-pg" })
 }
 
@@ -37,7 +45,7 @@ resource "aws_elasticache_cluster" "main" {
   engine               = var.engine
   node_type            = var.node_type
   num_cache_nodes      = var.num_cache_nodes
-  parameter_group_name = aws_db_parameter_group.main.name
+  parameter_group_name = aws_elasticache_parameter_group.main.name
   engine_version       = var.engine_version
   port                 = var.port
   subnet_group_name = aws_elasticache_subnet_group.main.name
