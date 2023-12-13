@@ -19,7 +19,7 @@ resource "aws_security_group" "main" {
   tags        = merge(local.tags, { name = "${local.name_prefix}-sg" })
 
   ingress {
-    description = "elasticcache"
+    description = "elasticache"
     from_port   = var.port
     to_port     = var.port
     protocol    = "tcp"
